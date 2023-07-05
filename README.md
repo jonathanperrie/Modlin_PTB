@@ -1,7 +1,9 @@
 # Modlin PTB GeoMx
 This is a supporting document to outline how to perform all of the analysis in our paper starting from the DCC files, metadata, and fluorescent markers channels. 
 
-Some things not included are fitting bounding boxes and adjusting image channel intensities. 
+Some parts not included: fitting bounding boxes and adjusting image channel intensities. 
+
+All plots and data should be on Box under GeoMx folder.
 
 # Figures 
 1. Primary granuloma types
