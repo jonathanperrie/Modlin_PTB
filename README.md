@@ -2,9 +2,9 @@
 This repo contains the code used to process our GeoMx and CosMx data and generate plots for the manuscript. Plots and data are not included here. 
 
 ## GeoMx
-Like bulk RNA-seq but with coordinates. We take the data and filter out genes that are not expressed above background (see NanoString document on limit of quantification) and spots that do not have enough genes expressed. There are some other filters too. We start with the DCC files, an annotation file, and a configuration file. 
+Like bulk RNA-seq but with coordinates. We take the data and filter out genes that are not expressed above background (see NanoString document on limit of quantification) and spots that do not have enough genes expressed. There are some other filters too related to the NGS read alignment and nuclei count. We start with the DCC files, an annotation file, and a configuration file. 
 
-The annotation file has DCC filenames (**Sample_ID**) + tissue labels (**Scan name**) + sample annotations (**Segment tags**) + coordinates. It was constructed from the SegmentProperties sheet within the NanoString counts spreadsheets provided in the initial data dump for each sample. 
+The annotation file has DCC filenames (**Sample_ID**) + tissue labels (**Scan name**) + sample annotations (**Segment tags**) + coordinates. It was constructed from the SegmentProperties sheet within the NanoString counts spreadsheets provided over the initial data dump for each sample. 
 
 ![Alt text](img/geomx_anno_all_batch_header.png)
 
