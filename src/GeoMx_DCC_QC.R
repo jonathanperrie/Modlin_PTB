@@ -1,3 +1,14 @@
+# ==============================================================================
+# Script Name: GeoMx data preprocessing and normalization 
+# Description: This script processes NanoString GeoMx data for spatial genomic 
+#              analysis. It includes steps for loading, preprocessing, quality 
+#              control, and normalization of DCC files across multiple batches. 
+#              Outputs include raw and normalized count data, nuclei metadata
+#              and negative probe counts. 
+# Author: Jonathan Perrie 
+# Date: 2024-08-08
+# ==============================================================================
+
 setwd("C:/Users/Jonathan/Documents/UCLA/Pelligrini/projects/geomx/")
 
 library(NanoStringNCTools)
@@ -8,18 +19,41 @@ library(openxlsx)
 library(knitr)
 library(ggplot2)
 
-# DCC filenames 
-DCCFiles <- c(dir("current_data/geomx_files/DCC_batch_4", pattern = ".dcc$",full.names = TRUE, recursive = TRUE),
-              dir("current_data/geomx_files/DCC_batch_5", pattern = ".dcc$",full.names = TRUE, recursive = TRUE),
-              dir("current_data/geomx_files/DCC_batch_3", pattern = ".dcc$",full.names = TRUE, recursive = TRUE),
-              dir("current_data/geomx_files/DCC_batch_1", pattern = ".dcc$",full.names = TRUE, recursive = TRUE),
-              dir("current_data/geomx_files/DCC_batch_2", pattern = ".dcc$",full.names = TRUE, recursive = TRUE))
+# ==============================================================================
+# Input and output parameters 
+# ==============================================================================
 
-# Configuration filename
+# digital count conversion filepaths 
+dcc_b1 <- "current_data/geomx_files/DCC_batch_1"
+dcc_b2 <- "current_data/geomx_files/DCC_batch_2"
+dcc_b3 <- "current_data/geomx_files/DCC_batch_3"
+dcc_b4 <- "current_data/geomx_files/DCC_batch_4"
+dcc_b5 <- "current_data/geomx_files/DCC_batch_5"
+
+DCCFiles <- c(
+  dir(dcc_b1, pattern = ".dcc$", full.names = TRUE, recursive = TRUE),
+  dir(dcc_b2, pattern = ".dcc$", full.names = TRUE, recursive = TRUE),
+  dir(dcc_b3, pattern = ".dcc$", full.names = TRUE, recursive = TRUE),
+  dir(dcc_b4, pattern = ".dcc$", full.names = TRUE, recursive = TRUE),
+  dir(dcc_b5, pattern = ".dcc$", full.names = TRUE, recursive = TRUE)
+)
+
+# Panel kit configuration 
 PKCFiles <- "current_data/geomx_files/Hs_R_NGS_WTA_v1.0.pkc"
 
-# Annotation filename
+# GeoMx annotation metadata 
 SampleAnnotationFile <- "current_data/geomx_files/anno/geomx_annotations_all_batches.xlsx"
+
+# Output file locations
+nuclei_output <- "current_data/nuclei_2024.csv"
+negprobes_output <- "current_data/geomx_negprobes_2024.csv"
+raw_data_output <- "current_data/geomx_integrated_raw_data_2024.csv"
+q3_data_output <- "current_data/geomx_integrated_q3_data_2024.csv"
+
+# ==============================================================================
+# NanoString data processing script 
+# ==============================================================================
+
 
 # Load data 
 batched_data <- readNanoStringGeoMxSet(dccFiles = DCCFiles,
@@ -171,7 +205,7 @@ qs <- apply(batch_count, 2, function(x) stats::quantile(x, 0.75))
 q3 <- sweep(batch_count, 2L, qs / ngeoMean(qs), FUN = "/")
 
 # Save to CSV
-write.table(nuclei,"current_data/nuclei_2024b.csv",sep=",",col.names=NA)
-write.table(batch_ngpb,"current_data/geomx_negprobes_2024b.csv",sep=",",col.names=NA)
-write.table(batch_count,"current_data/geomx_integrated_raw_data_2024b.csv",sep=",",col.names=NA)
-write.table(q3,"current_data/geomx_integrated_q3_data_2024b.csv",sep=",",col.names=NA)
+write.table(nuclei, nuclei_output, sep=",", col.names=NA)
+write.table(batch_ngpb, negprobes_output, sep=",", col.names=NA)
+write.table(batch_count, raw_data_output, sep=",", col.names=NA)
+write.table(q3, q3_data_output, sep=",", col.names=NA)
