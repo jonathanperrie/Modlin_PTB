@@ -13,8 +13,14 @@ The annotation file has DCC filenames (**Sample_ID**) + tissue labels (**Scan na
 * Median of ratios - [DESeq2](https://hbctraining.github.io/DGE_workshop/lessons/02_DGE_count_normalization.html) 
 
 ### Scripts
-1. [GeoMx_DCC_QC.R](src/GeoMx_DCC_QC.R): workflow for processing NanoString DCC file into raw and normalized counts with filtering for spots/genes 
+1. [GeoMx_DCC_QC.R](src/GeoMx_DCC_QC.R): workflow for processing NanoString DCC file into raw and normalized counts with filtering for spots/genes
+2. generate tables for summary counts
 
+TODO
+
+Counts and DESeq2 vs alternatives, why are we confident that DESeq2 is sufficient?
+- [standR](https://github.com/DavisLaboratory/GeoMXAnalysisWorkflow)
+- [NanoString](https://bioconductor.org/packages/devel/workflows/vignettes/GeoMxWorkflows/inst/doc/GeomxTools_RNA-NGS_Analysis.html#7_Differential_Expression)
 
 
 
